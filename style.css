@@ -13,7 +13,7 @@
 }
 
 html {
-    font-family: 'Nunito', sans-serif;
+    font-family: 'PT Sans', sans-serif;
     width: 100%;
 }
 
@@ -69,6 +69,7 @@ header {
 .main li a {
     text-decoration: none;
     color: rgb(121, 121, 121);
+    font-weight: 700;
 }
 
 .main li .type1 {
@@ -82,6 +83,7 @@ header {
     float: right;
     margin-right: 7rem;
     margin-top: -0.2rem;
+    font-weight: 700;
 }
 
 .btn a {
@@ -137,6 +139,11 @@ header {
     grid-column-gap: 5rem;
 }
 
+.game a {
+    text-decoration: none;
+    color: black;
+}
+
 .game1 p {
     text-align: center;
 }
@@ -149,17 +156,17 @@ header {
     text-align: center;
 }
 
-.game1:hover,
-.game1 p:active {
+.game1 a:hover,
+.game1 a p:active {
     color: rgb(250, 87, 87);
 }
 
-.game2:hover,
-.game2 p:active {
+.game2 a:hover,
+.game2 a p:active {
     color: rgb(250, 87, 87);
 }
 
-.game3:hover,
-.game3 p:active {
+.game3 a:hover,
+.game3 a p:active {
     color: rgb(250, 87, 87);
 }
