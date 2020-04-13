@@ -92,13 +92,43 @@
     }
     
     .num0 {
-        font-size: 2rem;
+        font-size: 1.5rem;
         position: absolute;
-        margin-top: 15.45rem;
-        margin-left: 6.3rem;
+        margin-top: 15.7rem;
+        margin-left: 6.5rem;
         z-index: 3;
     }
+    /*-------------------- CAR 17 ------------------*/
+    
+    .car17 {
+        position: relative;
+    }
+    
+    .tr17 {
+        width: 11%;
+        position: absolute;
+        margin-top: 10rem;
+        margin-left: 4rem;
+    }
+    
+    .cir17 {
+        width: 5%;
+        position: absolute;
+        margin-top: 8rem;
+        margin-left: 5.3rem;
+    }
+    
+    .num17 {
+        font-size: 1.5rem;
+        position: absolute;
+        margin-top: 8.5rem;
+        margin-left: 5.6rem;
+    }
     /*-------------------- CAR 2 ------------------*/
+    
+    .car2 {
+        position: relative;
+    }
     
     .tr2 {
         width: 11%;
@@ -112,14 +142,101 @@
         width: 5%;
         position: absolute;
         margin-top: 3rem;
-        margin-left: 14.2rem;
+        margin-left: 14.3rem;
         z-index: 2;
     }
     
     .num2 {
-        font-size: 2rem;
+        font-size: 1.5rem;
         position: absolute;
-        margin-top: 3.2rem;
-        margin-left: 14.8rem;
+        margin-top: 3.5rem;
+        margin-left: 15rem;
+        z-index: 3;
+    }
+    /*-------------------- CAR 20 ------------------*/
+    
+    .car20 {
+        position: relative;
+    }
+    
+    .tr20 {
+        width: 11%;
+        position: absolute;
+        margin-top: 11rem;
+        margin-left: 22rem;
+        z-index: 1;
+    }
+    
+    .cir20 {
+        width: 5%;
+        position: absolute;
+        margin-top: 9rem;
+        margin-left: 23.3rem;
+        z-index: 2;
+    }
+    
+    .num20 {
+        font-size: 1.5rem;
+        position: absolute;
+        margin-top: 9.5rem;
+        margin-left: 23.7rem;
+        z-index: 3;
+    }
+    /*-------------------- CAR 11 ------------------*/
+    
+    .car11 {
+        position: relative;
+    }
+    
+    .tr11 {
+        width: 11%;
+        position: absolute;
+        margin-top: 5rem;
+        margin-left: 31rem;
+        z-index: 1;
+    }
+    
+    .cir11 {
+        width: 5%;
+        position: absolute;
+        margin-top: 3rem;
+        margin-left: 32.3rem;
+        z-index: 2;
+    }
+    
+    .num11 {
+        font-size: 1.5rem;
+        position: absolute;
+        margin-top: 3.5rem;
+        margin-left: 32.7rem;
+        z-index: 3;
+    }
+    /*-------------------- CAR 7 ------------------*/
+    
+    .car7 {
+        position: relative;
+    }
+    
+    .tr7 {
+        width: 11%;
+        position: absolute;
+        margin-top: 11rem;
+        margin-left: 39rem;
+        z-index: 1;
+    }
+    
+    .cir7 {
+        width: 5%;
+        position: absolute;
+        margin-top: 9rem;
+        margin-left: 40.3rem;
+        z-index: 2;
+    }
+    
+    .num7 {
+        font-size: 1.5rem;
+        position: absolute;
+        margin-top: 9.5rem;
+        margin-left: 41.1rem;
         z-index: 3;
     }
