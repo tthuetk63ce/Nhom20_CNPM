@@ -8,7 +8,13 @@ class Scene1 extends Phaser.Scene {
         this.load.image("car0", "./img/Train_n.png");
         this.load.image("zone", "./img/zone.png");
         this.load.image("cir1", "./img/circle_head.png");
+<<<<<<< Updated upstream
         this.load.image("cir2", "./img/circle_car.png")
+=======
+        this.load.image("cir2", "./img/circle_car.png");
+        this.load.image("ball", "./img/ball.png");
+        this.load.image("progressbar", "./img/progressbar.png");
+>>>>>>> Stashed changes
     }
 
 
@@ -17,6 +23,10 @@ class Scene1 extends Phaser.Scene {
 
     // }
     create() {
+<<<<<<< Updated upstream
+=======
+        this.add.image(400, 50, 'progressbar');
+>>>>>>> Stashed changes
         var head = this.add.image(0, 0, 'train1');
         var cir = this.add.image(18, -45, 'cir1');
         var train1 = this.add.container(100, 340, [head, cir]);
@@ -37,6 +47,11 @@ class Scene1 extends Phaser.Scene {
             // car.event.onDragStop.add(fixLocation);
         }
 
+<<<<<<< Updated upstream
+=======
+        
+
+>>>>>>> Stashed changes
         // function fixLocation(car) {
         //     if (car, x > 140 && car.x < 280) {
         //         car.x = 140;
@@ -56,12 +71,29 @@ class Scene1 extends Phaser.Scene {
             gameObject.disableInteractive();
         });
 
+<<<<<<< Updated upstream
 
+=======
+        this.balls = this.physics.add.group({
+            key: 'ball',
+            repeat: 4,
+            setXY: {
+                x: 132,
+                y: 50,
+                stepX: 30
+            }
+        });
+        
+>>>>>>> Stashed changes
     }
 
 
     update() {
+<<<<<<< Updated upstream
 
+=======
+        var list = this.balls.getChildren();
+>>>>>>> Stashed changes
     }
 
     onStop() {
