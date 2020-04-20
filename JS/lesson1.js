@@ -1,5 +1,6 @@
 var config = {
     width: 790,
+<<<<<<< HEAD
     height: 460,
     backgroundColor: 0xdddddd,
     scene: {
@@ -26,3 +27,18 @@ function create() {
 function update() {
 
 }
+=======
+    height: 440,
+    backgroundColor: 0xffffff,
+    physics: {
+        default: "arcade",
+        arcade: {
+            //gravity: { y: 300 },
+            debug: false
+        }
+    },
+    scene: [Scene1]
+};
+
+var game = new Phaser.Game(config);
+>>>>>>> 3172f43916f7a7511eb4b427dc5584c15f4ffc8f
