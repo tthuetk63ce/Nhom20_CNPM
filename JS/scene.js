@@ -22,7 +22,7 @@ class Scene1 extends Phaser.Scene {
         this.add.image(400, 50, 'progressbar');
         var head = this.add.image(0, 0, 'train1');
         var cir = this.add.image(18, -45, 'cir1');
-        var train1 = this.add.container(100, 340, [head, cir]);
+        var train1 = this.add.container(105, 340, [head, cir]);
         var road = this.add.image(400, 360, 'road');
         train1.setDepth(2);
         var car;
@@ -40,7 +40,7 @@ class Scene1 extends Phaser.Scene {
             // car.event.onDragStop.add(fixLocation);
         }
 
-        
+
 
         // function fixLocation(car) {
         //     if (car, x > 140 && car.x < 280) {
@@ -70,7 +70,7 @@ class Scene1 extends Phaser.Scene {
                 stepX: 30
             }
         });
-        
+
     }
 
 
