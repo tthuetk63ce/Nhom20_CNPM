@@ -1,7 +1,7 @@
 var config = {
     width: 790,
     height: 420,
-    backgroundColor: 0xffffff,
+    backgroundColor: 0xdddddd,
     physics: {
         default: "arcade",
         arcade: {
@@ -9,7 +9,7 @@ var config = {
             debug: false
         }
     },
-    scene: [Scene1]
+    scene: [Scene2]
 };
 
 var game = new Phaser.Game(config);

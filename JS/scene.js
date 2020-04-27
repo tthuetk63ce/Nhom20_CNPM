@@ -13,11 +13,6 @@ class Scene1 extends Phaser.Scene {
         this.load.image("progressbar", "./img/progressbar.png");
     }
 
-
-    // UISence() {
-    //     Phaser.Scene.call(this, { key: 'UIScene', active: true });
-
-    // }
     create() {
         this.add.image(400, 50, 'progressbar');
         var head = this.add.image(0, 0, 'train1');
@@ -26,29 +21,15 @@ class Scene1 extends Phaser.Scene {
         var road = this.add.image(400, 360, 'road');
         train1.setDepth(2);
         var car;
+        var index = [17, 2, 11, 20, 7];
         for (var i = 0; i < 5; i++) {
             car = this.add.sprite(100 + 150 * i, 150, 'car0').setInteractive();
             car.setDepth(1);
+
             this.input.setDraggable(car);
             var zone = this.add.zone(210 + i * 100, 340, 100, 70).setDropZone();
             var ground = this.add.sprite(205 + i * 110, 360, 'zone');
-
-            // car.inputEnabled = true;
-
-            // car.input.enableSnap(200, 200, true, true);
-
-            // car.event.onDragStop.add(fixLocation);
         }
-
-
-
-        // function fixLocation(car) {
-        //     if (car, x > 140 && car.x < 280) {
-        //         car.x = 140;
-        //     }
-        // }
-
-
 
         this.input.on('drag', function(pointer, gameObject, dragX, dragY, dropZone) {
             gameObject.x = dragX;
