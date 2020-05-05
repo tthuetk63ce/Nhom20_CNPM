@@ -15,25 +15,36 @@ class Scene1 extends Phaser.Scene {
 
     create() {
         this.add.image(400, 50, 'progressbar');
-        var head = this.add.image(0, 0, 'train1');
-        var cir = this.add.image(18, -45, 'cir1');
-        var train1 = this.add.container(105, 340, [head, cir]);
+        var head = this.add.image(105, 340, 'train1');
         var road = this.add.image(400, 360, 'road');
-        train1.setDepth(2);
-        var car;
+        head.setDepth(2);
+        var train = this.physics.add.group();
+        var trainRoad = this.add.group();
         var index = [17, 2, 11, 20, 7];
+        var result = [2, 7, 11, 17, 20];
         for (var i = 0; i < 5; i++) {
-            car = this.add.sprite(100 + 150 * i, 150, 'car0').setInteractive();
+            var car = train.create(100 + 150 * i, 150, 'car0').setInteractive();
             car.setDepth(1);
+            car.name = index[i];
 
             this.input.setDraggable(car);
             var zone = this.add.zone(210 + i * 100, 340, 100, 70).setDropZone();
-            var ground = this.add.sprite(205 + i * 110, 360, 'zone');
+            var ground = trainRoad.create(210 + i * 110, 360, 'zone');
+            ground.name = result[i];
         }
 
-        this.input.on('drag', function(pointer, gameObject, dragX, dragY, dropZone) {
-            gameObject.x = dragX;
-            gameObject.y = dragY;
+        this.input.on('drag', function(pointer, car, dragX, dragY, dropZone) {
+            car.x = dragX;
+            car.y = dragY;
+            if (ground.name == car.name) {
+                ground.tint = 0x00ff00;
+            }
+        });
+
+        this.input.on('dragend', function(pointer, gameObject, dragX, dragY, dropZone) {
+            // if (car.name == trainRoad.name) {
+            //     trainRoad.tint = 0x00ff00;
+            // }
         });
 
         this.input.on('drop', function(pointer, gameObject, dropZone) {
