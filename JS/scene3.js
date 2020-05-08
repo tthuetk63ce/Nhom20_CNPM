@@ -1,50 +1,45 @@
-class Scene3 extends Phaser.Scene {
+class Scene1 extends Phaser.Scene {
     constructor() {
         super("Game");
     }
     preload() {
+
         this.load.image("road", "./img/TrainRoad.png");
-        this.load.image("train1", "./img/Train1.png");
-        this.load.image("car0", "./img/Train_n.png");
+        this.load.image("car2", "./img/Train2.png");
+        this.load.image("car4", "./img/Train4.png");
+        this.load.image("car6", "./img/Train6.png");
+        this.load.image("car7", "./img/Train7.png");
+        this.load.image("car8", "./img/Train8.png");
+        this.load.image("car12", "./img/Train12.png");
+        this.load.image("car14", "./img/Train14.png");
+        this.load.image("car16", "./img/Train16.png");
+        this.load.image("car17", "./img/Train17.png");
+        this.load.image("car18", "./img/Train18.png");
+        this.load.image("car19", "./img/Train19.png");
+        this.load.image("car20", "./img/Head20.png");
         this.load.image("zone", "./img/zone.png");
         this.load.image("cir1", "./img/circle_head.png");
         this.load.image("cir2", "./img/circle_car.png");
         this.load.image("ball", "./img/ball.png");
+        this.load.text("level", "./JS/level3.json");
         this.load.image("progressbar", "./img/progressbar.png");
     }
 
     create() {
         this.add.image(400, 50, 'progressbar');
-        var head = this.add.image(0, 0, 'train1');
-        var cir = this.add.image(18, -45, 'cir1');
-        var train1 = this.add.container(105, 340, [head, cir]);
-        var road = this.add.image(400, 360, 'road');
-        train1.setDepth(2);
-        var car;
-        var index = [17, 2, 11, 20, 7];
-        for (var i = 0; i < 5; i++) {
-            car = this.add.sprite(100 + 150 * i, 150, 'car0').setInteractive();
-            car.setDepth(1);
+        this.trainRoad3 = new trainRoad3(this, 0, 350, "road");
+        this.groupTrain3 = new listTrain3(this, 0, 170, "road");
 
-            this.input.setDraggable(car);
-            var zone = this.add.zone(210 + i * 100, 340, 100, 70).setDropZone();
-            var ground = this.add.sprite(205 + i * 110, 360, 'zone');
-        }
+        this.level = 1;
+        this.data = JSON.parse(this.cache.text.get("level")).level;
+        this.setData(this.data[this.level - 1]);
+        this.input.on("gameobjectup", this.onStop, this);
+        this.input.on("drag", this.onDoDrag, this);
 
-        this.input.on('drag', function(pointer, gameObject, dragX, dragY, dropZone) {
-            gameObject.x = dragX;
-            gameObject.y = dragY;
-        });
-
-        this.input.on('drop', function(pointer, gameObject, dropZone) {
-            gameObject.x = dropZone.x;
-            gameObject.y = dropZone.y;
-            gameObject.disableInteractive();
-        });
 
         this.balls = this.physics.add.group({
             key: 'ball',
-            repeat: 4,
+            repeat: 3,
             setXY: {
                 x: 132,
                 y: 50,
@@ -56,10 +51,112 @@ class Scene3 extends Phaser.Scene {
 
 
     update() {
+
         var list = this.balls.getChildren();
+        if (this.trainRoad3.check()) {
+            if (this.level == 4) {
+                this.time.addEvent({
+                    delay: 500,
+                    callback: () => {
+                        window.location = "finish.html";
+                    },
+                    loop: false,
+                });
+            }
+            else {
+                list[list.length - this.level].x += 450;
+                this.level++;
+                this.reset();
+                this.setData(this.data[this.level - 1]);
+            }
+
+        }
     }
 
-    onStop() {
+    onDoDrag(pointer, gameObject, dragX, dragY) {
+        console.log(pointer.x + " " + pointer.y);
+        if (dragX + gameObject.width > config.width) {
+            gameObject.y = dragY;
+        } else if (dragX < 0) {
+            gameObject.x = 0;
+        } else {
+            gameObject.x = dragX;
+        }
 
+        if (dragY < 0) {
+            gameObject.y = 0;
+        } else if (dragY + gameObject.height > config.height) {
+            gameObject.y = config.height - gameObject.height;
+        } else {
+            gameObject.y = dragY;
+        }
+
+    }
+
+    onStop(pointer, gameObject) {
+        if (gameObject.x > this.trainRoad3.widthRoad() && gameObject.x < (this.trainRoad3.widthRoad() + 107)
+            && gameObject.y > 210 && gameObject.y < 320
+        ) {
+            this.groupTrain3.removeTrain(gameObject);
+            this.trainRoad3.addTrain(gameObject);
+            if (this.trainRoad3.minTrain() < this.groupTrain3.maxTrain()) {
+                this.time.addEvent({
+                    delay: 500,
+                    callback: () => {
+                        this.trainRoad3.removeTrain(gameObject);
+                        this.groupTrain3.addTrain(gameObject);
+                    },
+                    loop: false,
+                });
+                
+            }
+        }
+
+    }
+
+    reset() {
+        this.groupTrain3.reset();
+        this.trainRoad3.reset();
+    }
+
+    setData(data) {
+        this.setTrainRoad3(data.headTrain);
+        this.setGroupTrain3(data.train);
+    }
+    setTrainRoad3(data) {
+        this.trainRoad3.addTrain(this.setTrain(data[0]));
+    }
+    setGroupTrain3(data) {
+        for (var i = 0; i < data.length; i++) {
+            this.groupTrain3.addTrain(this.setTrain(data[i]));
+        }
+    }
+    setTrain(num) {
+        switch (num) {
+            case 2:
+                return new Train(this, 0, 0, 2, "car2");
+            case 4:
+                return new Train(this, 0, 0, 4, "car4");
+            case 6:
+                return new Train(this, 0, 0, 6, "car6");
+            case 7:
+                return new Train(this, 0, 0, 7, "car7");
+            case 8:
+                return new Train(this, 0, 0, 8, "car8");
+            case 12:
+                return new Train(this, 0, 0, 12, "car12");
+            case 14:
+                return new Train(this, 0, 0, 14, "car14");
+            case 16:
+                return new Train(this, 0, 0, 16, "car16");
+            case 17:
+                return new Train(this, 0, 0, 17, "car17");
+            case 18:
+                return new Train(this, 0, 0, 18, "car18");
+            case 19:
+                return new Train(this, 0, 0, 19, "car19");
+            case 20:
+                return new Train(this, 0, 0, 20, "car20");
+        }
     }
 }
