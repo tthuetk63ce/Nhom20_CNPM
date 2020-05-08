@@ -3,27 +3,18 @@ class Scene1 extends Phaser.Scene {
         super("Game");
     }
     preload() {
-        this.load.image("block1", "./img/1.png");
-        this.load.image("block2", "./img/2.png");
-        this.load.image("block3", "./img/3.png");
-        this.load.image("block4", "./img/4.png");
-        this.load.image("block5", "./img/5.png");
-        this.load.image("block6", "./img/6.png");
-        this.load.image("block7", "./img/7.png");
-        this.load.image("block8", "./img/8.png");
-        this.load.image("block9", "./img/9.png");
+        
         this.load.image("road", "./img/TrainRoad.png");
         this.load.image("train1", "./img/Train1.png");
         this.load.image("car2", "./img/Train2.png");
-        this.load.image("car7", "./img/Train7.png");
         this.load.image("car11", "./img/Train11.png");
         this.load.image("car12", "./img/Train12.png");
-        this.load.image("car13", "./img/Train13.png");
         this.load.image("car14", "./img/Train14.png");
         this.load.image("car16", "./img/Train16.png");
         this.load.image("car17", "./img/Train17.png");
         this.load.image("car18", "./img/Train18.png");
         this.load.image("car19", "./img/Train19.png");
+        this.load.image("car7", "./img/Train7.png");
         this.load.image("car20", "./img/Train20.png");
         this.load.image("zone", "./img/zone.png");
         this.load.image("cir1", "./img/circle_head.png");
@@ -36,16 +27,18 @@ class Scene1 extends Phaser.Scene {
     create() {
         this.add.image(400, 50, 'progressbar');
         this.trainRoad1 = new trainRoad(this, 0, 350, "road");
-        this.groupTrain = new trainRoad(this, 0, 170, "road");
-
+        this.groupTrain = new listTrain(this, 0, 170, "road");
+       
         this.level = 1;
         this.data = JSON.parse(this.cache.text.get("level")).level;
         this.setData(this.data[this.level - 1]);
         this.input.on("gameobjectup", this.onStop, this);
         this.input.on("drag", this.onDoDrag, this);
+
+
         this.balls = this.physics.add.group({
             key: 'ball',
-            repeat: 4,
+            repeat: 3,
             setXY: {
                 x: 132,
                 y: 50,
@@ -56,11 +49,29 @@ class Scene1 extends Phaser.Scene {
     }
 
 
-    update() {}
+    update() {
 
-    onStop() {
+        var list = this.balls.getChildren();
+        if (this.trainRoad1.check()) {
+            if (this.level == 4) {
+                this.time.addEvent({
+                    delay: 500,
+                    callback: () => {
+                        window.location = "finish.html";
+                    },
+                    loop: false,
+                });
+            }
+            else {
+                list[list.length - this.level].x += 450;
+                this.level++;
+                this.reset();
+                this.setData(this.data[this.level - 1]);
+            }
 
+        }
     }
+
     onDoDrag(pointer, gameObject, dragX, dragY) {
         console.log(pointer.x + " " + pointer.y);
         if (dragX + gameObject.width > config.width) {
@@ -80,12 +91,40 @@ class Scene1 extends Phaser.Scene {
         }
 
     }
+
+    onStop(pointer, gameObject) {
+        if (gameObject.x > this.trainRoad1.widthRoad() && gameObject.x < (this.trainRoad1.widthRoad()+107)
+            && gameObject.y > 210 && gameObject.y < 320
+        ) {
+            this.groupTrain.removeTrain(gameObject);
+            this.trainRoad1.addTrain(gameObject);
+            if (this.trainRoad1.maxTrain() > this.groupTrain.minTrain()) {
+                this.time.addEvent({
+                    delay: 500,
+                    callback: () => {
+                        this.trainRoad1.removeTrain(gameObject);
+                        this.groupTrain.addTrain(gameObject);;
+                    },
+                    loop: false,
+                });
+                //this.trainRoad1.removeTrain(gameObject);
+                //this.groupTrain.addTrain(gameObject);
+            }
+        }
+        
+    }
+
+    reset() {
+        this.groupTrain.reset();
+        this.trainRoad1.reset();
+    }
+
     setData(data) {
         this.setTrainRoad1(data.headTrain);
         this.setGroupTrain(data.train);
     }
     setTrainRoad1(data) {
-        this.trainRoad1.addTrain(this.setTrain(0));
+        this.trainRoad1.addTrain(this.setTrain(data[0]));
     }
     setGroupTrain(data) {
         for (var i = 0; i < data.length; i++) {
@@ -96,28 +135,26 @@ class Scene1 extends Phaser.Scene {
         switch (num) {
             case 0:
                 return new Train(this, 0, 0, 0, "train1");
-            case 1:
-                return new Train(this, 0, 0, 1, "car2");
             case 2:
-                return new Train(this, 0, 0, 2, "car7");
-            case 3:
-                return new Train(this, 0, 0, 3, "car11");
-            case 4:
-                return new Train(this, 0, 0, 4, "car12");
-            case 5:
-                return new Train(this, 0, 0, 5, "car13");
-            case 6:
-                return new Train(this, 0, 0, 6, "car14");
+                return new Train(this, 0, 0, 2, "car2");
             case 7:
-                return new Train(this, 0, 0, 7, "car16");
-            case 8:
-                return new Train(this, 0, 0, 8, "car17");
-            case 9:
-                return new Train(this, 0, 0, 9, "car18");
-            case 10:
-                return new Train(this, 0, 0, 10, "car19");
+                return new Train(this, 0, 0, 7, "car7");
             case 11:
-                return new Train(this, 0, 0, 11, "car20");
+                return new Train(this, 0, 0, 11, "car11");
+            case 12:
+                return new Train(this, 0, 0, 12, "car12");
+            case 14:
+                return new Train(this, 0, 0, 14, "car14");
+            case 16:
+                return new Train(this, 0, 0, 16, "car16");
+            case 17:
+                return new Train(this, 0, 0, 17, "car17");
+            case 18:
+                return new Train(this, 0, 0, 18, "car18");
+            case 19:
+                return new Train(this, 0, 0, 19, "car19");
+            case 20:
+                return new Train(this, 0, 0, 20, "car20");
         }
     }
 }
