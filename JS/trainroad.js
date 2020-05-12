@@ -24,7 +24,7 @@ class trainRoad extends Phaser.Physics.Arcade.Sprite {
         var sumWidth = 30;
         var l = listTrains.length;
         for (var i = 1; i <= l; i++) {
-            sumWidth +=  107;
+            sumWidth += 107;
         }
         return sumWidth;
     }
@@ -51,8 +51,8 @@ class trainRoad extends Phaser.Physics.Arcade.Sprite {
                 list[i].setVelocityX(-280);
             }
         }
-        
-        
+
+
     }
 
     check() {
@@ -69,7 +69,7 @@ class trainRoad extends Phaser.Physics.Arcade.Sprite {
     removeTrain(obj) {
         this.train.remove(obj);
         this.sort();
-        
+
     }
 
     reset() {

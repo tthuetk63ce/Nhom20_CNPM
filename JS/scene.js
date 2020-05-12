@@ -3,8 +3,9 @@ class Scene1 extends Phaser.Scene {
         super("Game");
     }
     preload() {
-        
+
         this.load.image("road", "./img/TrainRoad.png");
+        this.load.image("list", "./img/TrainList.png");
         this.load.image("train1", "./img/Train1.png");
         this.load.image("car2", "./img/Train2.png");
         this.load.image("car11", "./img/Train11.png");
@@ -22,25 +23,35 @@ class Scene1 extends Phaser.Scene {
         this.load.image("ball", "./img/ball.png");
         this.load.text("level", "./JS/level.json");
         this.load.image("progressbar", "./img/progressbar.png");
+        this.load.audio("click", "./audio/click.mp3");
+        this.load.audio("wrong", "./audio/wrong.mp3");
     }
 
     create() {
         this.add.image(400, 50, 'progressbar');
         this.trainRoad1 = new trainRoad(this, 0, 350, "road");
-        this.groupTrain = new listTrain(this, 0, 170, "road");
-       
+        this.groupTrain = new listTrain(this, 0, 170, "list");
+
         this.level = 1;
         this.data = JSON.parse(this.cache.text.get("level")).level;
         this.setData(this.data[this.level - 1]);
         this.input.on("gameobjectup", this.onStop, this);
         this.input.on("drag", this.onDoDrag, this);
 
-
+        this.zones = this.physics.add.group({
+            key: 'zone',
+            repeat: 4,
+            setXY: {
+                x: 210,
+                y: 375,
+                stepX: 107
+            }
+        });
         this.balls = this.physics.add.group({
             key: 'ball',
             repeat: 3,
             setXY: {
-                x: 132,
+                x: 140,
                 y: 50,
                 stepX: 30
             }
@@ -61,8 +72,7 @@ class Scene1 extends Phaser.Scene {
                     },
                     loop: false,
                 });
-            }
-            else {
+            } else {
                 list[list.length - this.level].x += 450;
                 this.level++;
                 this.reset();
@@ -93,8 +103,9 @@ class Scene1 extends Phaser.Scene {
     }
 
     onStop(pointer, gameObject) {
-        if (gameObject.x > this.trainRoad1.widthRoad() && gameObject.x < (this.trainRoad1.widthRoad()+107)
-            && gameObject.y > 210 && gameObject.y < 320
+        this.sound.play('click');
+        if (gameObject.x > this.trainRoad1.widthRoad() && gameObject.x < (this.trainRoad1.widthRoad() + 107) &&
+            gameObject.y > 210 && gameObject.y < 320
         ) {
             this.groupTrain.removeTrain(gameObject);
             this.trainRoad1.addTrain(gameObject);
@@ -109,9 +120,10 @@ class Scene1 extends Phaser.Scene {
                 });
                 //this.trainRoad1.removeTrain(gameObject);
                 //this.groupTrain.addTrain(gameObject);
+                this.sound.play('wrong');
             }
+
         }
-        
     }
 
     reset() {

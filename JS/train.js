@@ -6,6 +6,7 @@ class Train extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this).setOrigin(0, 0);
         scene.physics.add.existing(this);
         this.setInteractive();
+        this.setDepth(1);
         scene.input.setDraggable(this);
     }
 

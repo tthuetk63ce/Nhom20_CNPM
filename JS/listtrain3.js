@@ -23,7 +23,7 @@ class listTrain3 extends Phaser.Physics.Arcade.Sprite {
         var list = this.train.getChildren();
 
         for (var i = 0; i < list.length; i++) {
-            list[i].x = i * 107 + 30 * (i + 1);
+            list[i].x = i * 123 + 30 * (i + 1);
             list[i].y = this.y - 59;
             list[i].onMove();
         }
