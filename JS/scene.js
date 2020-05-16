@@ -34,6 +34,7 @@ class Scene1 extends Phaser.Scene {
 
         this.level = 1;
         this.data = JSON.parse(this.cache.text.get("level")).level;
+        this.text = new Text(this, 100, 100, "Order the train cars from the smaller to the greater");
         this.setData(this.data[this.level - 1]);
         this.input.on("gameobjectup", this.onStop, this);
         this.input.on("drag", this.onDoDrag, this);
