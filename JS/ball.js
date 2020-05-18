@@ -1,6 +1,7 @@
 class Ball extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, num, obj) {
         super(scene, 100, 170, obj);
+        this.create();
         this.setNum(num);
         scene.add.existing(this).setOrigin(0, 0);
         scene.physics.add.existing(this);
@@ -12,6 +13,7 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
     create() {
         let num = 1;
         var speed = 5;
+        var ballTouch;
     }
 
     offMove() {
@@ -23,16 +25,21 @@ class Ball extends Phaser.Physics.Arcade.Sprite {
     }
 
     touchBall(scene) {
+        if (this.ballTouch instanceof Object) {
+            this.destroyBallTouch();
+        }
 
+        this.ballTouch = scene.add.image(this.x, this.y, 'ballObj2').setOrigin(0, 0);
     }
 
-    onVisible() {
-
+    destroyBallTouch() {
+        this.ballTouch.destroy();
     }
 
     setNum(num) {
         this.num = num;
     }
+
     getNum() {
         return this.num;
     }

@@ -2,6 +2,7 @@ class Scene2 extends Phaser.Scene {
     constructor() {
         super("Game");
     }
+
     preload() {
         this.load.image("ruler", "./img/ruler.png");
         this.load.image("progressbar", "./img/progressbar.png");
@@ -9,6 +10,7 @@ class Scene2 extends Phaser.Scene {
         this.load.image("ballObj", "./img/ballObj.png");
         this.load.image("ballObj2", "./img/ballObj2.png");
     }
+
     create() {
         this.add.image(20, 300, 'ruler').setOrigin(0, 0);
         this.add.image(400, 50, 'progressbar');
@@ -33,18 +35,29 @@ class Scene2 extends Phaser.Scene {
     }
 
     onDoDrag(pointer, gameObject, dragX, dragY) {
-        if (dragX < 20) {
-            gameObject.x = 20;
-        } else if (dragX > 700) {
-            gameObject.x = 700;
+
+        if (dragX < 19) {
+            gameObject.x = 19;
+        } else if (dragX > 681) {
+            gameObject.x = 681;
         } else {
             gameObject.x = dragX;
+        }
+
+        if (gameObject.ballTouch instanceof Object) {
+            gameObject.ballTouch.x = gameObject.x;
+            gameObject.ballTouch.y = 170;
         }
 
         gameObject.y = 170;
     }
 
-    onStart(pointer, gameObject) {}
+    onStart(pointer, gameObject) {
+        gameObject.touchBall(this);
+    }
 
-    onStop(pointer, gameObject) {}
+    onStop(pointer, gameObject) {
+        gameObject.destroyBallTouch();
+        console.log(Math.floor(gameObject.x / dis));
+    }
 }
