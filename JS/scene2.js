@@ -58,6 +58,18 @@ class Scene2 extends Phaser.Scene {
 
     onStop(pointer, gameObject) {
         gameObject.destroyBallTouch();
-        console.log(Math.floor(gameObject.x / dis));
+        var num = Math.floor(gameObject.x / dis);
+        console.log(num);
+        if (num < 10) {
+            this.add.text(45 + num * 33, 335, num, {
+                font: "25px Arial",
+                fill: "#000"
+            });
+        } else {
+            this.add.text(40 + num * 33, 335, num, {
+                font: "25px Arial",
+                fill: "#000"
+            });
+        }
     }
 }
